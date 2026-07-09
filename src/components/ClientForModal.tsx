@@ -1,0 +1,90 @@
+import React, { useEffect, useState } from 'react';
+import { client, clientFormData } from '../types/client';
+import './ClientForModal.css';
+
+interface ClientFormModalProps {
+  open: boolean;
+  client: client | null;
+  onClose: () => void;
+  onSave: (data: clientFormData) => void;
+}
+
+const emptyForm: clientFormData = {
+  nome: '',
+  ativo: true,
+};
+
+function ClientForModal({ open, client, onClose, onSave }: ClientFormModalProps) {
+  const [form, setForm] = useState<clientFormData>(emptyForm);
+
+  useEffect(() => {
+    if (client) {
+      const { id: _id, ...data } = client;
+      setForm(data);
+    } else {
+      setForm(emptyForm);
+    }
+  }, [client, open]);
+
+  if (!open) return null;
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSave(form);
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose} role="presentation">
+      <div
+        className="modal"
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-labelledby="product-modal-title"
+      >
+        <h2 id="product-modal-title">{client ? 'Editar produto' : 'Novo produto'}</h2>
+        <form className="modal__form" onSubmit={handleSubmit}>
+          <div className="field">
+            <label className="field__label" htmlFor="prod-nome">
+              Nome
+            </label>
+            <input
+              id="prod-nome"
+              className="input"
+              required
+              placeholder="Ex: Notebook Pro"
+              value={form.nome}
+              onChange={(e) => setForm({ ...form, nome: e.target.value })}
+            />
+
+          </div>
+
+          <div className="field field--switch">
+            <label className="switch">
+              <input
+                className="switch__input"
+                type="checkbox"
+                checked={form.ativo}
+                onChange={(e) => setForm({ ...form, ativo: e.target.checked })}
+              />
+              <span className="switch__track">
+                <span className="switch__thumb" />
+              </span>
+            </label>
+            <span className="field__label field__label--inline">client ativo</span>
+          </div>
+
+          <div className="modal__actions">
+            <button type="button" className="btn btn--secondary" onClick={onClose}>
+              Cancelar
+            </button>
+            <button type="submit" className="btn btn--primary">
+              Salvar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+export default ClientForModal;
