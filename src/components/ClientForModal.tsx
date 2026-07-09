@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { client, clientFormData } from '../types/client';
+import { Client, ClientFormData } from '../types/client';
 import './ClientForModal.css';
 
 interface ClientFormModalProps {
   open: boolean;
-  client: client | null;
+  client: Client | null;
   onClose: () => void;
-  onSave: (data: clientFormData) => void;
+  onSave: (data: ClientFormData) => void;
 }
 
-const emptyForm: clientFormData = {
+const emptyForm: ClientFormData = {
   nome: '',
   ativo: true,
 };
 
 function ClientForModal({ open, client, onClose, onSave }: ClientFormModalProps) {
-  const [form, setForm] = useState<clientFormData>(emptyForm);
+  const [form, setForm] = useState<ClientFormData>(emptyForm);
 
   useEffect(() => {
     if (client) {

@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Pagination from '../components/Pagination';
-import ProductFormModal from '../components/ClientForModal';
+import ClientForModal from '../components/ClientForModal';
 import {
   createClient,
   deleteClient,
-  listClient,
+  listClients,
   updateClient,
-} from '../services/productService';
-import { client,clientFormData } from '../types/client';
+} from '../services/clientService';
+import { Client,ClientFormData } from '../types/client';
 import './ClientesPage.css';
 
 const PAGE_SIZE = 5;
@@ -17,15 +17,15 @@ const PAGE_SIZE = 5;
  * Replique este padrão para Clientes, Vendas, etc., trocando entidade e service.
  */
 function ClientesPage() {
-  const [clients, setClients] = useState<client[]>([]);
+  const [clients, setClients] = useState<Client[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
-  const [editingClient, setEditingClient] = useState<client | null>(null);
+  const [editingClient, setEditingClient] = useState<Client | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
-    const data = await listClient();
+    const data = await listClients();
     setClients(data);
     setLoading(false);
   }, []);
@@ -50,7 +50,7 @@ function ClientesPage() {
     setModalOpen(true);
   };
 
-  const openEdit = (client: client) => {
+  const openEdit = (client: Client) => {
     setEditingClient(client);
     setModalOpen(true);
   };
@@ -60,7 +60,7 @@ function ClientesPage() {
     setEditingClient(null);
   };
 
-  const handleSave = async (data: clientFormData) => {
+  const handleSave = async (data: ClientFormData) => {
     if (editingClient) {
       await updateClient(editingClient.id, data);
     } else {
@@ -70,7 +70,7 @@ function ClientesPage() {
     await load();
   };
 
-  const handleDelete = async (client: client) => {
+  const handleDelete = async (client: Client) => {
     const ok = window.confirm(`Excluir cliente"${client.nome}"?`);
     if (!ok) return;
     await deleteClient(client.id);
@@ -99,10 +99,7 @@ function ClientesPage() {
                 <thead>
                   <tr>
                     <th>Nome</th>
-                    <th>SKU</th>
-                    <th>Preço</th>
-                    <th>Estoque</th>
-                    <th>Status</th>
+                    <th>Ativo</th>
                     <th className="data-table__actions-col">Ações</th>
                   </tr>
                 </thead>
@@ -114,26 +111,26 @@ function ClientesPage() {
                       </td>
                     </tr>
                   ) : (
-                    pageItems.map((p) => (
-                      <tr key={p.id}>
-                        <td>{p.nome}</td>
+                    pageItems.map((c) => (
+                      <tr key={c.id}>
+                        <td>{c.nome}</td>
                         <td>
-                          <span className={`badge ${p.ativo ? 'badge--success' : 'badge--muted'}`}>
-                            {p.ativo ? 'Ativo' : 'Inativo'}
+                          <span className={`badge ${c.ativo ? 'badge--success' : 'badge--muted'}`}>
+                            {c.ativo ? 'Ativo' : 'Inativo'}
                           </span>
                         </td>
                         <td className="data-table__actions">
                           <button
                             type="button"
                             className="btn btn--sm btn--secondary"
-                            onClick={() => openEdit(p)}
+                            onClick={() => openEdit(c)}
                           >
                             Editar
                           </button>
                           <button
                             type="button"
                             className="btn btn--sm btn--danger"
-                            onClick={() => handleDelete(p)}
+                            onClick={() => handleDelete(c)}
                           >
                             Excluir
                           </button>
@@ -156,7 +153,7 @@ function ClientesPage() {
         )}
       </div>
 
-      <ProductFormModal
+      <ClientForModal
         open={modalOpen}
         client={editingClient}
         onClose={closeModal}

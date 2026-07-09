@@ -1,7 +1,7 @@
-export interface client {
+export interface Client {
   id: string;
   nome: string;
   ativo: boolean;
 }
 
-export type clientFormData = Omit<client, 'id'>;
+export type ClientFormData = Omit<Client, 'id'>;
