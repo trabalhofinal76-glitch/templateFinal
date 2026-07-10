@@ -41,7 +41,7 @@ function ClientForModal({ open, client, onClose, onSave }: ClientFormModalProps)
         role="dialog"
         aria-labelledby="product-modal-title"
       >
-        <h2 id="product-modal-title">{client ? 'Editar produto' : 'Novo produto'}</h2>
+        <h2 id="product-modal-title">{client ? 'Editar cliente' : 'Novo cliente'}</h2>
         <form className="modal__form" onSubmit={handleSubmit}>
           <div className="field">
             <label className="field__label" htmlFor="prod-nome">
@@ -51,7 +51,7 @@ function ClientForModal({ open, client, onClose, onSave }: ClientFormModalProps)
               id="prod-nome"
               className="input"
               required
-              placeholder="Ex: Notebook Pro"
+              placeholder="Ex: Nome completo"
               value={form.nome}
               onChange={(e) => setForm({ ...form, nome: e.target.value })}
             />
@@ -70,7 +70,7 @@ function ClientForModal({ open, client, onClose, onSave }: ClientFormModalProps)
                 <span className="switch__thumb" />
               </span>
             </label>
-            <span className="field__label field__label--inline">client ativo</span>
+            <span className="field__label field__label--inline">Cliente Ativo</span>
           </div>
 
           <div className="modal__actions">

@@ -107,7 +107,7 @@ function ClientesPage() {
                   {pageItems.length === 0 ? (
                     <tr>
                       <td colSpan={6} className="data-table__empty">
-                        Nenhum produto cadastrado. Clique em Novo para adicionar.
+                        Nenhum cliente cadastrado. Clique em Novo para adicionar.
                       </td>
                     </tr>
                   ) : (
