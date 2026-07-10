@@ -82,7 +82,7 @@ function ClientesPage() {
       <header className="page__header">
         <div>
           <h1>Clientes</h1>
-          <p className="page__subtitle">CRUD de exemplo — cadastro e edição de clientes</p>
+          <p className="page__subtitle">Cadastro e edição de clientes</p>
         </div>
         <button type="button" className="btn btn--primary" onClick={openNew}>
           + Novo

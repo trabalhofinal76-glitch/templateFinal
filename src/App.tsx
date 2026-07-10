@@ -5,6 +5,7 @@ import PlaceholderPage from './pages/PlaceholderPage';
 import ProdutosPage from './pages/ProdutosPage';
 import './styles/shared.css';
 import './styles/inputs.css';
+import ClientesPage from './pages/ClientesPage';
 
 /**
  * Rotas do CRM — ao adicionar item em menuConfig.ts, registre a rota aqui.
@@ -33,11 +34,23 @@ function App() {
           {/* Cadastros — submenu */}
           <Route path="cadastros/produtos" element={<ProdutosPage />} />
           <Route
+            path="cadastros/produtos"
+            element={
+              <PlaceholderPage
+                title="Produtos"
+                description="Cadastro de Produtos"
+              />
+            }
+          />
+
+                    {/* Cadastros — submenu */}
+          <Route path="cadastros/clientes" element={<ClientesPage />} />
+          <Route
             path="cadastros/clientes"
             element={
               <PlaceholderPage
                 title="Clientes"
-                description="Cadastro de clientes — use o mesmo padrão da página de Produtos."
+                description="Cadastro de Clientes"
               />
             }
           />

@@ -85,7 +85,7 @@ function ProdutosPage() {
       <header className="page__header">
         <div>
           <h1>Produtos</h1>
-          <p className="page__subtitle">CRUD de exemplo — cadastro e manutenção de produtos</p>
+          <p className="page__subtitle">Cadastro e manutenção de produtos</p>
         </div>
         <button type="button" className="btn btn--primary" onClick={openNew}>
           + Novo
