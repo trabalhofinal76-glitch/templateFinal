@@ -39,16 +39,16 @@ function ClientForModal({ open, client, onClose, onSave }: ClientFormModalProps)
         className="modal"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
-        aria-labelledby="product-modal-title"
+        aria-labelledby="client-modal-title"
       >
-        <h2 id="product-modal-title">{client ? 'Editar cliente' : 'Novo cliente'}</h2>
+        <h2 id="client-modal-title">{client ? 'Editar cliente' : 'Novo cliente'}</h2>
         <form className="modal__form" onSubmit={handleSubmit}>
           <div className="field">
-            <label className="field__label" htmlFor="prod-nome">
+            <label className="field__label" htmlFor="cli-nome">
               Nome
             </label>
             <input
-              id="prod-nome"
+              id="cli-nome"
               className="input"
               required
               placeholder="Ex: Nome completo"

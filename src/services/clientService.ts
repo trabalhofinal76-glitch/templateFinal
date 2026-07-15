@@ -1,8 +1,8 @@
 import { Client, ClientFormData } from '../types/client';
-
+import axios from 'axios';
 
 let clients: Client[] = [
-  
+
 ];
 
 let nextId = 1;
@@ -33,4 +33,15 @@ export async function deleteClient(id: string): Promise<boolean> {
   const before = clients.length;
   clients = clients.filter((c) => c.id !== id);
   return delay(clients.length < before);
+}
+
+export async function createClientApi(client: any) {
+  console.log(client);
+  const newClient = await axios.post('http://192.168.204.90:3000/clients', { name: client.nome })
+}
+
+export async function listClientApi() {
+
+  const newClient = await axios.get('http://192.168.204.90:3000/clients');
+  return newClient.data;
 }

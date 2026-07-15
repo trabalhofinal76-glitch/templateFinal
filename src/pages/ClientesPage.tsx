@@ -3,11 +3,13 @@ import Pagination from '../components/Pagination';
 import ClientForModal from '../components/ClientForModal';
 import {
   createClient,
+  createClientApi,
   deleteClient,
   listClients,
   updateClient,
+  listClientApi,
 } from '../services/clientService';
-import { Client,ClientFormData } from '../types/client';
+import { Client, ClientFormData } from '../types/client';
 import './ClientesPage.css';
 
 const PAGE_SIZE = 5;
@@ -17,7 +19,7 @@ const PAGE_SIZE = 5;
  * Replique este padrão para Clientes, Vendas, etc., trocando entidade e service.
  */
 function ClientesPage() {
-  const [clients, setClients] = useState<Client[]>([]);
+  const [clients, setClients] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
@@ -25,7 +27,8 @@ function ClientesPage() {
 
   const load = useCallback(async () => {
     setLoading(true);
-    const data = await listClients();
+    const data = await listClientApi();
+    console.log(data);
     setClients(data);
     setLoading(false);
   }, []);
@@ -64,7 +67,7 @@ function ClientesPage() {
     if (editingClient) {
       await updateClient(editingClient.id, data);
     } else {
-      await createClient(data);
+      await createClientApi(data);
     }
     closeModal();
     await load();
@@ -113,7 +116,7 @@ function ClientesPage() {
                   ) : (
                     pageItems.map((c) => (
                       <tr key={c.id}>
-                        <td>{c.nome}</td>
+                        <td>{c.name}</td>
                         <td>
                           <span className={`badge ${c.ativo ? 'badge--success' : 'badge--muted'}`}>
                             {c.ativo ? 'Ativo' : 'Inativo'}
